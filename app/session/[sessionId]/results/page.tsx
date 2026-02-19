@@ -7,7 +7,7 @@ export async function generateStaticParams() {
 
 import { unstable_noStore as noStore } from "next/cache";
 import { notFound } from "next/navigation";
-import { prisma } from "@/lib/prisma";
+import { getPrisma } from "@/lib/prisma";
 import { finishSession } from "@/app/actions/session";
 import { loadExamQuotes } from "@/lib/quotes";
 import { ResultsClient } from "./ResultsClient";
@@ -16,6 +16,7 @@ type Props = { params: Promise<{ sessionId: string }> };
 
 export default async function SessionResultsPage({ params }: Props) {
   noStore();
+  const prisma = getPrisma();
   const { sessionId } = await params;
 
   const session = await prisma.session.findUnique({

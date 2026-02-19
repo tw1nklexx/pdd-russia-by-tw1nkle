@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { prisma } from "@/lib/prisma";
+import { getPrisma } from "@/lib/prisma";
 import { StartTrainingButton } from "@/components/StartTrainingButton";
 
 type Props = { params: Promise<{ code: string }> };
@@ -8,6 +8,7 @@ type Props = { params: Promise<{ code: string }> };
 export const dynamic = "force-dynamic";
 
 export default async function SignDetailPage({ params }: Props) {
+  const prisma = getPrisma();
   const { code } = await params;
   const decoded = decodeURIComponent(code);
 

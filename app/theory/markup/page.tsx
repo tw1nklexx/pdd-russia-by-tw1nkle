@@ -1,10 +1,11 @@
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
-import { prisma } from "@/lib/prisma";
+import { getPrisma } from "@/lib/prisma";
 import { MarkupList } from "./MarkupList";
 
 export default async function MarkupPage() {
+  const prisma = getPrisma();
   const items = await prisma.markup.findMany({
     orderBy: [{ category: "asc" }, { code: "asc" }],
   });

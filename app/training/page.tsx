@@ -2,11 +2,12 @@ export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
 import Link from "next/link";
-import { prisma } from "@/lib/prisma";
+import { getPrisma } from "@/lib/prisma";
 import { startTrainingAndRedirect } from "@/app/actions/session";
 import { TrainingTopicCard } from "./TrainingTopicCard";
 
 export default async function TrainingPage() {
+  const prisma = getPrisma();
   const topics = await prisma.topic.findMany({
     include: {
       _count: { select: { questions: true } },

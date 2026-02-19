@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { prisma } from "@/lib/prisma";
+import { getPrisma } from "@/lib/prisma";
 
 function shuffle<T>(array: T[]): T[] {
   const out = [...array];
@@ -14,6 +14,7 @@ function shuffle<T>(array: T[]): T[] {
 }
 
 export async function createTrainingSession(topicId: string): Promise<string> {
+  const prisma = getPrisma();
   const topic = await prisma.topic.findUnique({
     where: { id: topicId },
     include: { questions: true },
@@ -50,6 +51,7 @@ const EXAM_MAX_MISTAKES = 2;
 const EXAM_QUESTION_COUNT = 20;
 
 export async function createExamSession(): Promise<string> {
+  const prisma = getPrisma();
   const all = await prisma.question.findMany({
     select: { id: true },
   });
@@ -78,6 +80,7 @@ export async function createExamSession(): Promise<string> {
 }
 
 export async function getExamRemainingSeconds(sessionId: string): Promise<number> {
+  const prisma = getPrisma();
   const session = await prisma.session.findUnique({
     where: { id: sessionId },
     select: { mode: true, startedAt: true, durationSec: true, finishedAt: true },
@@ -101,6 +104,7 @@ export async function submitAnswer(
   questionId: string,
   optionId: string
 ): Promise<SubmitAnswerResult> {
+  const prisma = getPrisma();
   const option = await prisma.option.findFirst({
     where: { id: optionId, questionId },
   });
@@ -152,6 +156,7 @@ export async function finishSession(
   sessionId: string,
   reason?: "time" | "mistakes"
 ): Promise<void> {
+  const prisma = getPrisma();
   const logs = await prisma.answerLog.findMany({
     where: { sessionId },
     select: { isCorrect: true },
@@ -186,6 +191,7 @@ export async function startExamAndRedirect(): Promise<never> {
 export async function createMistakesTrainingFromSession(
   sourceSessionId: string
 ): Promise<never> {
+  const prisma = getPrisma();
   const wrongLogs = await prisma.answerLog.findMany({
     where: { sessionId: sourceSessionId, isCorrect: false },
     select: { questionId: true },

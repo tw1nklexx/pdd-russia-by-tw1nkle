@@ -1,10 +1,11 @@
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
-export const generateStaticParams = async () => [];
+export async function generateStaticParams() {
+  return [];
+}
 
 import { unstable_noStore as noStore } from "next/cache";
-import { headers } from "next/headers";
 import { redirect, notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { SessionRunner } from "./SessionRunner";
@@ -13,7 +14,6 @@ type Props = { params: Promise<{ sessionId: string }> };
 
 export default async function SessionPage({ params }: Props) {
   noStore();
-  void headers();
   const { sessionId } = await params;
 
   const session = await prisma.session.findUnique({

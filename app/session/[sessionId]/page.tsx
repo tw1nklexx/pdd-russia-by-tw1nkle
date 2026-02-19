@@ -1,8 +1,9 @@
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
+
 import { redirect, notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { SessionRunner } from "./SessionRunner";
-
-export const dynamic = "force-dynamic";
 
 type Props = { params: Promise<{ sessionId: string }> };
 

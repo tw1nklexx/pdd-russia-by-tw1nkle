@@ -1,7 +1,8 @@
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
+
 import { prisma } from "@/lib/prisma";
 import { SignsList } from "./SignsList";
-
-export const dynamic = "force-dynamic";
 
 export default async function SignsPage() {
   const signs = await prisma.sign.findMany({

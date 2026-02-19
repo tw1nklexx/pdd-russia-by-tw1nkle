@@ -1,10 +1,11 @@
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
+
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { finishSession } from "@/app/actions/session";
 import { loadExamQuotes } from "@/lib/quotes";
 import { ResultsClient } from "./ResultsClient";
-
-export const dynamic = "force-dynamic";
 
 type Props = { params: Promise<{ sessionId: string }> };
 

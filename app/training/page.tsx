@@ -1,9 +1,10 @@
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
+
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { startTrainingAndRedirect } from "@/app/actions/session";
 import { TrainingTopicCard } from "./TrainingTopicCard";
-
-export const dynamic = "force-dynamic";
 
 export default async function TrainingPage() {
   const topics = await prisma.topic.findMany({

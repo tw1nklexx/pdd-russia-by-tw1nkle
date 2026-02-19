@@ -1,7 +1,8 @@
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
+
 import { prisma } from "@/lib/prisma";
 import { MarkupList } from "./MarkupList";
-
-export const dynamic = "force-dynamic";
 
 export default async function MarkupPage() {
   const items = await prisma.markup.findMany({

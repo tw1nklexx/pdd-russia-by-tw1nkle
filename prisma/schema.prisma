@@ -1,13 +1,13 @@
-// PDD (Russian driving theory) exam app — SQLite for MVP, Postgres-ready schema
-// Switch provider to "postgresql" and set DATABASE_URL for production scaling.
+// PDD (Russian driving theory) exam app — Postgres schema
 
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 // ——— Core content ———
@@ -38,7 +38,6 @@ model Option {
   @@index([questionId])
 }
 
-// Optional: topic from JSON "topic": ["Общие положения"]
 model Topic {
   id   String @id @default(cuid())
   name String @unique
